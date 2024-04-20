@@ -1,20 +1,81 @@
 import { useEffect, useState } from "react";
-import { addToCart, getAllProducts } from "../../API";
-import { Badge, Button, Card, Image, List, Rate, Typography, message } from "antd";
+import { addToCart, getAllProducts, getProductsByCategory } from "../../API";
+import { Badge, Button, Card, Image, List, Rate, Select, Spin, Typography, message } from "antd";
+import { useParams } from "react-router-dom";
 
 const Products = () => {
+    const [loading, setLoading] = useState(false)
+    const params = useParams()
     const [items, setItems] = useState([])
+    const [sortOrder, setSortOrder] = useState('az')
     useEffect(() => {
-        getAllProducts().then(res => {
+        setLoading(true);
+        (params?.categoryId? getProductsByCategory(params.categoryId): getAllProducts()).then(res => {
             setItems(res.products)
+            setLoading(false)
         })
-    }, [])
+    }, [params])
 
-    return <div>
+    const getSortedItems = () => {
+        const sortedItems = [...items]
+        sortedItems.sort((a,b) => {
+            const alowerCaseTitle = a.title.toLowerCase()
+            const blowerCaseTitle = b.title.toLowerCase()
+            if(sortOrder === 'az'){
+                return alowerCaseTitle > blowerCaseTitle? 1 : alowerCaseTitle === blowerCaseTitle? 0 : -1
+            }
+            else if(sortOrder === 'za'){
+                return alowerCaseTitle < blowerCaseTitle? 1 : alowerCaseTitle === blowerCaseTitle? 0 : -1
+            }
+            else if(sortOrder === 'lowHigh'){
+                return a.price > b.price? 1 : a.price === b.price? 0 : -1
+            }
+            else if(sortOrder === 'highLow'){
+                return a.price < b.price? 1 : a.price === b.price? 0 : -1
+            }
+        })
+
+        return sortedItems
+    }
+
+    // if(loading) {
+    //     return <Spin spinning/>
+    // }
+
+    return <div className="productsContainer">
+        <div>
+            <Typography.Text>View Items Sorted By: </Typography.Text>
+            <Select 
+                onChange={(value) => {
+                    setSortOrder(value)
+                }}
+                defaultValue={"az"}
+                options={[
+                {
+                    label: 'Alphabetically a-z',
+                    value: 'az'
+                },
+                {
+                    label: 'Alphabetically z-a',
+                    value: 'za'
+                },
+                {
+                    label: 'Price Low to High',
+                    value: 'lowHigh'
+                },
+                {
+                    label: 'Price High to Low',
+                    value: 'highLow'
+                },
+            ]}>
+
+            </Select>
+        </div>
         <List
+        loading={loading}
         grid={{column: 3}} 
         renderItem={(product, index) => {
-            return <Badge.Ribbon className="itemCardImageBadge" text={product.discountPercentage} color="pink"><Card 
+            return <Badge.Ribbon className="itemCardImageBadge" text={`${product.discountPercentage}% Off`} color="pink"><Card 
             className="itemCard"
             title={product.title} 
             key={index} 
@@ -35,19 +96,22 @@ const Products = () => {
                 ></Card.Meta>
             </Card>
             </Badge.Ribbon>
-        }} dataSource={items}></List>
+        }} dataSource={getSortedItems()}></List>
     </div>
 };
 
 const AddToCartButton = ({item}) => {
+    const [loading, setLoading] = useState(false)
     const addProductToCart = () => {
+        setLoading(true)
         addToCart(item.id).then(res => {
             message.success(`${item.title} has been added to cart!`)
+            setLoading(false)
         })
     }
     return <Button type="link" onClick={() => {
     addProductToCart()
-   }}>add to cart</Button>
+   }} loading={loading}>add to cart</Button>
 }
 
 export default Products;

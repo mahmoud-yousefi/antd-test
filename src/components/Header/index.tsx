@@ -6,7 +6,7 @@ import { getCart } from "../../API";
 
 const AppHeader = () => {
   const navigate = useNavigate();
-  const onMenuClick = (item) => {
+  const onMenuClick = (item: { key: string }) => {
     navigate(`/${item.key}`);
   };
   return (
@@ -83,7 +83,7 @@ const AppCart = () => {
     })
   }, [])
 
-  const onConfirmOrder = (values) => {
+  const onConfirmOrder = (values: { full_name: string; email: string; address: string }) => {
     console.log(values);
     setCartDrawerOpen(false)
     setCheckoutDrawerOpen(false)

@@ -66,7 +66,7 @@ const AppHeader = () => {
           },
         ]}
       />
-      <Typography.Title>Mahmoud Store</Typography.Title>
+      <Typography.Title>Store</Typography.Title>
       <AppCart/>
     </div>
   );

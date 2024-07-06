@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { addToCart, getAllProducts, getProductsByCategory } from "../../API";
-import { Badge, Button, Card, Image, List, Rate, Select, Spin, Typography, message } from "antd";
+import { Badge, Button, Card, Image, List, Rate, Select, Typography, message } from "antd";
 import { useParams } from "react-router-dom";
 
 interface Product {

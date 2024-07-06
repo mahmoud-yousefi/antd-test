@@ -5,7 +5,7 @@ import Category from "../../pages/Category";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Category />}></Route>
+      <Route path="/antd-test" element={<Category />}></Route>
       <Route path="/:categoryId" element={<Category />}></Route>
     </Routes>
   );

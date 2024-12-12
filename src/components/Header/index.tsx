@@ -10,7 +10,7 @@ const AppHeader = () => {
     navigate(`/${item.key}`);
   };
   return (
-    <div className="appHeader">
+    <div className="appHeader" onClick={() => document.documentElement.dir = 'rtl'}>
       <Menu
         className="appMenu"
         onClick={onMenuClick}

@@ -18,7 +18,7 @@
     "antd": "^5.15.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.1",
+    "react-hook-form": "file:",
     "react-router-dom": "^6.22.3",
     "yup": "^1.4.0"
   },
@@ -32,6 +32,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "gh-pages": "^6.1.1",
+    "less": "^4.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.1.6"
   }

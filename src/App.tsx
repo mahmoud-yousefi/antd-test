@@ -1,6 +1,6 @@
 import React from "react";
 import {} from "antd";
-import "./App.css";
+import "./App.less";
 import AppHeader from "./components/Header/index";
 import AppFooter from "./components/Footer/index";
 import PageContent from "./components/PageContent/index";
